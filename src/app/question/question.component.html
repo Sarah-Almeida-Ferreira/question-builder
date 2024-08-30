@@ -1,0 +1,42 @@
+<section [formGroup]="form" class="question-card">
+  <label [attr.for]="question.key">{{ question.label }}</label>
+  <hr />
+  <div>
+    @switch (question.controlType) { @case ('textbox') {
+    <input
+      [formControlName]="question.key"
+      [id]="question.key"
+      [type]="question.type"
+    />
+    } @case ('dropdown') {
+    <select [id]="question.key" [formControlName]="question.key">
+      @for (opt of question.options; track opt) {
+      <option [value]="opt.key">{{ opt.value }}</option>
+      }
+    </select>
+    } @case ('radio') { @for (opt of question.options; track opt) {
+    <div>
+      <input
+        [id]="opt.key"
+        [formControlName]="question.key"
+        type="radio"
+        [value]="opt.key"
+      />
+      <label [attr.for]="opt.key">{{ opt.value }}</label>
+    </div>
+    } } @case ('checkbox') { @for (opt of question.options; track opt) {
+    <div>
+      <input
+        [id]="opt.key"
+        [formArrayName]="question.key"
+        type="checkbox"
+        [value]="opt.key"
+      />
+      <label [attr.for]="opt.key"> {{ opt.value }}</label>
+    </div>
+    } } }
+  </div>
+  @if (!isValid) {
+  <div class="errorMessage">{{ question.label }} is required</div>
+  }
+</section>
