@@ -1,5 +1,9 @@
 <section [formGroup]="form" class="question-card">
-  <label [attr.for]="question.key">{{ question.label }}</label>
+  @if (isNew) {
+  <input [value]="question.label" placeholder="Enunciado da questão" />
+  } @else {
+    <label [attr.for]="question.key">{{ question.label }}</label>
+  }
   <hr />
   <div>
     @switch (question.controlType) { @case ('textbox') {

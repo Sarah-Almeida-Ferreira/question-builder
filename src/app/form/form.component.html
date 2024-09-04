@@ -1,9 +1,13 @@
 <div class="form">
+  @if (loaded) { @if (isNew) {
+  <input [value]="title" placeholder="Título do formulário" />
+  } @else {
   <h2>{{ title }}</h2>
+  }
   <form (ngSubmit)="onSubmit()" [formGroup]="form">
     @for (question of questions; track question) {
     <div class="form-row">
-      <app-question [question]="question" [form]="form"></app-question>
+      <app-question [question]="question" [form]="form" [isNew]="isNew"></app-question>
     </div>
     }
     <div class="form-row">
@@ -14,5 +18,5 @@
   <div class="form-row">
     <strong>Saved the following values</strong><br />{{ payLoad }}
   </div>
-  }
+  } }
 </div>

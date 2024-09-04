@@ -15,6 +15,7 @@ import { QuestionBase } from '../core/models/question-base';
 export class QuestionComponent {
   @Input() question!: QuestionBase<string>;
   @Input() form!: FormGroup;
+  @Input() isNew!: boolean;
 
   get isValid() {
     return this.form.controls[this.question.key].valid;

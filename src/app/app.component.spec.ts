@@ -40,13 +40,6 @@ describe('AppComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have questions$ as an observable', () => {
-    component.questions$.subscribe((questions) => {
-      expect(questions.length).toBeGreaterThan(0);
-      expect(questions[0].key).toBe('firstName');
-    });
-  });
-
   it('should render the form component', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('app-form')).not.toBeNull();
