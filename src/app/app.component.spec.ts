@@ -1,12 +1,12 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { AppComponent } from './app.component';
-import { QuestionService } from './core/services/question.service';
+import { FormService } from './core/services/form.service';
 import { QuestionBase } from './core/models/question-base';
 import { FormComponent } from './form/form.component';
 import { AsyncPipe } from '@angular/common';
 
-class MockQuestionService {
+class MockFormService {
   getQuestions() {
     const questions: QuestionBase<any>[] = [
       new QuestionBase({ key: 'name', label: 'Name', controlType: 'textbox' })
@@ -18,13 +18,13 @@ class MockQuestionService {
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
-  let service: QuestionService;
+  let service: FormService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [FormComponent, AppComponent],
       providers: [
-        { provide: QuestionService, useClass: MockQuestionService }
+        { provide: FormService, useClass: MockFormService }
       ]
     }).compileComponents();
   });
@@ -32,7 +32,7 @@ describe('AppComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AppComponent);
     component = fixture.componentInstance;
-    service = TestBed.inject(QuestionService);
+    service = TestBed.inject(FormService);
     fixture.detectChanges();
   });
 

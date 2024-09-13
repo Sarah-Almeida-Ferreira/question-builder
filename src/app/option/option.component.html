@@ -1,0 +1,63 @@
+<div class="option-container">
+  <ng-container *ngIf="!isInput">
+    <div class="option-container-ordering-container">
+      <ng-container *ngIf="isDropdown; else showInputPlaceholder">
+        <p class="option-container-ordering">
+          <span>{{ option?.order || order }}.</span>
+        </p>
+      </ng-container>
+      <ng-template #showInputPlaceholder>
+        <input [type]="inputType" disabled />
+      </ng-template>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!!option; else addOptionBlock">
+    <div class="option-container-label">
+      <input
+        [(ngModel)]="option.label"
+        [id]="option.key"
+        [placeholder]="labelPlaceholder"
+        [disabled]="isInput || isOther"
+        class="input full-width"
+        appSelectText
+      />
+    </div>
+
+    <ng-container *ngIf="showRemoveButton">
+      <button
+        type="button"
+        class="option-container-remove-button bg-transparent cursor-pointer border-none"
+        (click)="onRemove()"
+        aria-label="Remover opção"
+      >
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </ng-container>
+  </ng-container>
+
+  <ng-template #addOptionBlock>
+    <div class="option-container-label">
+      <button
+        class="option-container-add-button bg-transparent cursor-pointer border-none"
+        type="button"
+        (click)="onAdd(false)"
+        aria-label="Adicionar opção"
+      >
+        Adicionar opção
+      </button>
+
+      <ng-container *ngIf="showAddOther">
+        <span>Ou</span>
+        <button
+          class="option-container-add-other-button bg-transparent cursor-pointer border-none"
+          type="button"
+          (click)="onAdd(true)"
+          aria-label="Adicionar opção 'Outro'"
+        >
+          adicionar "Outro"
+        </button>
+      </ng-container>
+    </div>
+  </ng-template>
+</div>

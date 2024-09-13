@@ -1,3 +1,99 @@
+@import "./app/core/vars.scss";
+
 :root {
   font-family: "Roboto";
+}
+
+body {
+  background-color: $bg-default;
+  height: 100%;
+}
+
+.main {
+  height: 100%;
+}
+
+.select {
+  height: 30px;
+  padding: 6px 10px;
+  box-sizing: border-box;
+  border: 1px solid #d3d3d3;
+  border-radius: 5px;
+
+  &:focus {
+    outline-color: #d3d3d3;
+  }
+}
+
+.input {
+  padding: 5px;
+  height: 30px;
+  box-sizing: border-box;
+  position: relative;
+  white-space: pre-wrap;
+  font-family: "Roboto";
+  overflow: hidden;
+  resize: none;
+  border: none;
+  transition: background-size 0.2s linear;
+  background-image: linear-gradient(to right, $primary 0%, $primary 100%);
+  background-position: 0 100%;
+  background-size: 0 2px;
+  background-repeat: no-repeat;
+
+  &:hover {
+    border-bottom: 1px solid #d3d3d3;
+  }
+  
+  &:focus {
+    outline: none;
+    background-size: 100% 2px;
+  }
+}
+
+.bg-transparent {
+  background-color: transparent;
+}
+
+.border-none {
+  border: none;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.card {
+  width: 100%;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 15px auto;
+  box-sizing: border-box;
+  position: relative;
+
+  .card-horizontal-adornment {
+    width: 100%;
+    height: 10px;
+    background-color: #9e9e9e;
+    border-radius: 5px 5px 0 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .card-vertical-adornment {
+    height: 100%;
+    width: 5px;
+    background-color: $primary;
+    border-radius: 5px 0 0 5px;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 }

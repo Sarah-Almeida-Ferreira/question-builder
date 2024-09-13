@@ -1,46 +1,127 @@
-<section [formGroup]="form" class="question-card">
-  @if (isNew) {
-  <input [value]="question.label" placeholder="Enunciado da questão" />
-  } @else {
-    <label [attr.for]="question.key">{{ question.label }}</label>
-  }
-  <hr />
-  <div>
-    @switch (question.controlType) { @case ('textbox') {
-    <input
-      [formControlName]="question.key"
-      [id]="question.key"
-      [type]="question.type"
-    />
-    } @case ('dropdown') {
-    <select [id]="question.key" [formControlName]="question.key">
-      @for (opt of question.options; track opt) {
-      <option [value]="opt.key">{{ opt.value }}</option>
-      }
-    </select>
-    } @case ('radio') { @for (opt of question.options; track opt) {
-    <div>
-      <input
-        [id]="opt.key"
-        [formControlName]="question.key"
-        type="radio"
-        [value]="opt.key"
-      />
-      <label [attr.for]="opt.key">{{ opt.value }}</label>
+<section class="card question-card" (click)="onClick()">
+  <div class="card-vertical-adornment" *ngIf="isEditing"></div>
+
+  <div *ngIf="isNew; else existingQuestion">
+    <div class="question-card-header">
+      <textarea
+        [(ngModel)]="question.label"
+        (change)="onChange()"
+        [id]="question.key + 'LabelInput'"
+        placeholder="Pergunta"
+        class="input question-card-header-label full-width"
+        appSelectText
+        appAutoResizeTextarea
+      ></textarea>
+      <select
+        *ngIf="isEditing"
+        class="select full-width"
+        [id]="question.key + 'ControlType'"
+        [(ngModel)]="question.controlType"
+        (change)="clearOptions()"
+      >
+        <option *ngFor="let key of controlTypesValues" [value]="key">
+          {{ key }}
+        </option>
+      </select>
     </div>
-    } } @case ('checkbox') { @for (opt of question.options; track opt) {
-    <div>
-      <input
-        [id]="opt.key"
-        [formArrayName]="question.key"
-        type="checkbox"
-        [value]="opt.key"
-      />
-      <label [attr.for]="opt.key"> {{ opt.value }}</label>
+
+    <div class="question-card-body">
+      <app-option
+        *ngFor="let opt of question.options; trackBy: trackByKey"
+        [option]="opt"
+        [controlType]="question.controlType"
+        [isUnique]="hasSingleOption"
+        [isEditing]="isEditing"
+        (remove)="removeOption($event)"
+      ></app-option>
+
+      <app-option
+        *ngIf="showAddQuestion"
+        [controlType]="question.controlType"
+        [order]="newOptionIndex"
+        [showAddOther]="showAddOther"
+        [isEditing]="isEditing"
+        (add)="addOption($event)"
+      ></app-option>
     </div>
-    } } }
+
+    <div class="question-card-footer" *ngIf="isEditing">
+      <div class="question-card-footer-actions">
+        <button
+          type="button"
+          title="Duplicar"
+          class="question-card-footer-actions-button cursor-pointer"
+          (click)="onDuplicate()"
+        >
+          <i class="fa-regular fa-copy"></i>
+        </button>
+        <button
+          type="button"
+          title="Excluir"
+          class="question-card-footer-actions-button cursor-pointer"
+          (click)="onRemove()"
+        >
+          <i class="fa-regular fa-trash-can"></i>
+        </button>
+      </div>
+      <div class="question-card-footer-divisor"></div>
+      <div class="question-card-footer-options">
+        <p class="question-card-footer-options-label">Obrigatória</p>
+        <app-toggle-switch
+          [(value)]="question.required"
+          [id]="question.key + 'switch'"
+          (change)="onChange()"
+        ></app-toggle-switch>
+      </div>
+    </div>
   </div>
-  @if (!isValid) {
-  <div class="errorMessage">{{ question.label }} is required</div>
-  }
+
+  <ng-template #existingQuestion>
+    <label [attr.for]="question.key">{{ question.label }}</label>
+    <hr />
+    <div [formGroup]="form">
+      <ng-container [ngSwitch]="question.controlType">
+        <input
+          *ngSwitchCase="controlTypes.INPUT"
+          [formControlName]="question.key"
+          [id]="question.key"
+          [type]="question.type"
+        />
+        <select
+          *ngSwitchCase="controlTypes.DROPDOWN"
+          [id]="question.key"
+          [formControlName]="question.key"
+        >
+          <option *ngFor="let opt of question.options" [value]="opt.key">
+            {{ opt.label }}
+          </option>
+        </select>
+        <ng-container *ngSwitchCase="controlTypes.RADIO">
+          <div *ngFor="let opt of question.options">
+            <input
+              [id]="opt.key"
+              [formControlName]="question.key"
+              type="radio"
+              [value]="opt.key"
+            />
+            <label [attr.for]="opt.key">{{ opt.label }}</label>
+          </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="controlTypes.CHECKBOX">
+          <div *ngFor="let opt of question.options">
+            <input
+              [id]="opt.key"
+              [formArrayName]="question.key"
+              type="checkbox"
+              [value]="opt.key"
+            />
+            <label [attr.for]="opt.key">{{ opt.label }}</label>
+          </div>
+        </ng-container>
+      </ng-container>
+    </div>
+    <div *ngIf="!isValid" class="errorMessage">
+      {{ question.label }} é obrigatório
+    </div>
+  </ng-template>
 </section>

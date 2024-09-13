@@ -1,0 +1,26 @@
+@if (isNew) {
+<div class="custom-dropdown">
+  <button (click)="toggleDropdown()" class="dropdown-toggle">
+    {{ selectedValue || "Select an option" }}
+  </button>
+  @if (isOpen) {
+  <ul class="dropdown-menu">
+    @for(opt of question.options; track opt) {
+    <li class="dropdown-item">
+      <input
+        [value]="opt.value"
+        placeholder="Editar opção"
+        (click)="$event.stopPropagation()"
+      />
+    </li>
+    }
+  </ul>
+  }
+</div>
+} @else {
+<select [id]="question.key" [formControlName]="question.key">
+  @for (opt of question.options; track opt) {
+  <option [value]="opt.key">{{ opt.value }}</option>
+  }
+</select>
+}

@@ -3,7 +3,7 @@ import { FormComponent } from './form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { QuestionControlService } from '../core/services/question-control.service';
 import { QuestionBase } from '../core/models/question-base';
-import { QuestionService } from '../core/services/question.service';
+import { FormService } from '../core/services/form.service';
 
 describe('FormComponent', () => {
   let component: FormComponent;
@@ -13,7 +13,7 @@ describe('FormComponent', () => {
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, FormComponent],
       providers: [
-        QuestionService,
+        FormService,
         QuestionControlService,
       ],
     }).compileComponents();

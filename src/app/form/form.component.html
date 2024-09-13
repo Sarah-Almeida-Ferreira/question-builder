@@ -1,22 +1,88 @@
 <div class="form">
-  @if (loaded) { @if (isNew) {
-  <input [value]="title" placeholder="Título do formulário" />
-  } @else {
-  <h2>{{ title }}</h2>
-  }
-  <form (ngSubmit)="onSubmit()" [formGroup]="form">
-    @for (question of questions; track question) {
-    <div class="form-row">
-      <app-question [question]="question" [form]="form" [isNew]="isNew"></app-question>
+  <ng-container *ngIf="loaded">
+    <div class="card form-header-card" (click)="edit(form.key)">
+      <div class="card-horizontal-adornment"></div>
+      <div class="card-vertical-adornment" *ngIf="isEditing"></div>
+
+      <ng-container *ngIf="isNew; else viewMode">
+        <textarea
+          [(ngModel)]="form.title"
+          (change)="onFormChange()"
+          id="formTitleInput"
+          placeholder="Título do formulário"
+          class="form-title input full-width"
+          appSelectText
+          appAutoResizeTextarea
+          aria-label="Título do formulário"
+        ></textarea>
+        <textarea
+          [(ngModel)]="form.description"
+          (change)="onFormChange()"
+          id="formDescriptionInput"
+          placeholder="Descrição do formulário"
+          class="form-description input full-width"
+          appAutoResizeTextarea
+          aria-label="Descrição do formulário"
+        ></textarea>
+      </ng-container>
+
+      <ng-template #viewMode>
+        <h2>{{ form.title }}</h2>
+        <p>{{ form.description }}</p>
+      </ng-template>
     </div>
-    }
-    <div class="form-row">
-      <button type="submit" [disabled]="!form.valid">Enviar</button>
-    </div>
-  </form>
-  @if (payLoad) {
-  <div class="form-row">
-    <strong>Saved the following values</strong><br />{{ payLoad }}
-  </div>
-  } }
+
+    <form (ngSubmit)="onSubmit()" [formGroup]="formGroup" class="form-body">
+      <ng-container
+        *ngFor="let question of form.questions; trackBy: trackByKey"
+      >
+        <div class="form-row">
+          <app-question
+            [question]="question"
+            [form]="formGroup"
+            [isNew]="isNew"
+            [editingKey]="editingKey"
+            (edit)="edit($event)"
+            (change)="onFormChange()"
+            (duplicate)="addQuestion($event, true)"
+            (remove)="removeQuestion($event)"
+          ></app-question>
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="isNew; else submitMode">
+        <div class="form-tool-bar">
+          <button
+            type="button"
+            class="form-tool-bar-button cursor-pointer"
+            title="Adicionar pergunta"
+            (click)="addQuestion(newQuestion, false)"
+            aria-label="Adicionar pergunta"
+          >
+            <i class="fa-solid fa-plus"></i>
+          </button>
+        </div>
+      </ng-container>
+
+      <ng-template #submitMode>
+        <div class="form-row">
+          <button
+            class="form-submit-button border-none cursor-pointer"
+            type="submit"
+            [disabled]="!formGroup.valid"
+            aria-label="Enviar formulário"
+          >
+            Enviar
+          </button>
+        </div>
+      </ng-template>
+    </form>
+
+    <ng-container *ngIf="payLoad">
+      <div class="form-row">
+        <strong>Saved the following values</strong><br />
+        {{ payLoad }}
+      </div>
+    </ng-container>
+  </ng-container>
 </div>

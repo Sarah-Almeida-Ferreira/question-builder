@@ -1,0 +1,50 @@
+@import '../core/vars.scss';
+
+.option-container {
+  display: flex;
+  box-sizing: border-box;
+  column-gap: 10px;
+  margin-bottom: 15px;
+
+  .option-container-ordering-container {
+    width: 5%;
+    display: flex;
+    align-items: center;
+    
+    .option-container-ordering {
+      margin: 0;
+    }
+  }
+
+  .option-container-label {
+    width: 90%;
+  }
+
+  .option-container-add-button {
+    height: 30px;
+    margin-right: 5px;
+    box-sizing: border-box;
+    
+    &:hover {
+        border-bottom: 1px solid #d3d3d3;
+    }
+}
+
+.option-container-add-other-button {
+    color: $primary;
+    font-weight: bold;
+    margin-left: 5px;
+    padding: 5px;
+    
+    &:hover {
+        background-color: rgba($primary, 0.1);
+    }
+  }
+
+  .option-container-remove-button {
+    color: $text-color;
+    font-size: larger;
+    height: 30px;
+    padding: 0;
+  }
+}

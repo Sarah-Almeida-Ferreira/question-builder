@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { QuestionBase } from '../models/question-base';
+import { ControlTypes } from '../enums/control-types';
 
 @Injectable()
 export class QuestionControlService {
@@ -8,7 +9,7 @@ export class QuestionControlService {
     const group: any = {};
 
     questions.forEach((question) => {
-      if (question.controlType === 'checkbox') {
+      if (question.controlType === ControlTypes.CHECKBOX) {
         const array: any = [];
         const formArray = new FormArray(array);
         if (question.options) {

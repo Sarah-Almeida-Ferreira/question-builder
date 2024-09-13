@@ -5,18 +5,24 @@ import { TextboxQuestion } from '../models/textbox-question';
 import { of } from 'rxjs';
 import { RadioQuestion } from '../models/radio-question';
 import { CheckboxQuestion } from '../models/checkbox-question';
+import { FormBase } from '../models/form-base';
+import { OptionBase } from '../models/option-base';
 @Injectable()
-export class QuestionService {
+export class FormService {
+  create(form: FormBase) {
+    console.log(form);
+  }
+
   getQuestions() {
     const questions: QuestionBase<string>[] = [
       new DropdownQuestion({
         key: 'favoriteAnimal',
         label: 'Favorite Animal',
         options: [
-          { key: 'cat', value: 'Cat' },
-          { key: 'dog', value: 'Dog' },
-          { key: 'horse', value: 'Horse' },
-          { key: 'capybara', value: 'Capybara' },
+          new OptionBase({ key: 'cat', label: 'Cat', order: 1 }),
+          new OptionBase({ key: 'dog', label: 'Dog', order: 2 }),
+          new OptionBase({ key: 'horse', label: 'Horse', order: 3 }),
+          new OptionBase({ key: 'capybara', label: 'Capybara', order: 4 }),
         ],
         order: 3,
       }),
@@ -24,9 +30,9 @@ export class QuestionService {
         key: 'gender',
         label: 'Gender',
         options: [
-          { key: 'male', value: 'Male' },
-          { key: 'female', value: 'Female' },
-          { key: 'other', value: 'Other' },
+          new OptionBase({ key: 'male', label: 'Male', order: 1 }),
+          new OptionBase({ key: 'female', label: 'Female', order: 2 }),
+          new OptionBase({ key: 'other', label: 'Other', order: 3 }),
         ],
         order: 4,
       }),
@@ -34,9 +40,9 @@ export class QuestionService {
         key: 'test',
         label: 'test',
         options: [
-          { key: 'abdjs', value: 'Abdjs' },
-          { key: 'dajksdn', value: 'Dajksdn' },
-          { key: 'ahdisb', value: 'Ahdisb' },
+          new OptionBase({ key: 'abdjs', label: 'Abdjs', order: 1 }),
+          new OptionBase({ key: 'dajksdn', label: 'Dajksdn', order: 2 }),
+          new OptionBase({ key: 'ahdisb', label: 'Ahdisb', order: 3 }),
         ],
         order: 4,
       }),

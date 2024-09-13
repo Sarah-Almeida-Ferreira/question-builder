@@ -1,19 +1,72 @@
+@import "../core/vars.scss";
+
 .form {
   margin: auto;
-  width: 40rem;
-  padding: 0 20px;
+  box-sizing: border-box;
 
-  @media screen and (max-width: 780px) {
-    width: 70vw;
+  @media screen and (min-width: 780px) {
+    padding: 0 20px;
+    width: 780px;
   }
 
-  button {
+  .form-title {
+    font-size: xx-large;
+    height: 50px;
+  }
+
+  .form-body {
+    position: relative;
+  }
+
+  .form-tool-bar {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    background-color: white;
+    border: 1px solid $light-gray;
+    box-sizing: border-box;
+    border-radius: 10px 10px 0 0;
+    padding: 0 20px;
+    height: 60px;
+    width: 90%;
+    bottom: 0;
+    left: 5%;
+
+    .form-tool-bar-button {
+      height: 48px;
+      width: 48px;
+      border-radius: 50%;
+      background-color: transparent;
+      font-size: larger;
+      border: none;
+
+      &:hover {
+        background-color: $hover-bg;
+      }
+    }
+
+    @media screen and (min-width: 950px) {
+      flex-direction: column;
+      position: absolute;
+      left: calc(100% + 20px);
+      bottom: 0;
+      width: 50px;
+      height: 255px;
+      border-radius: 5px;
+      padding: 10px 0;
+
+      .form-tool-bar-button {
+        height: 36px;
+        width: 36px;
+        font-size: large;
+      }
+    }
+  }
+
+  .form-submit-button {
     height: 30px;
-    width: 100px;
     margin-top: 10px;
-    border: none;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
     float: right;
 
     &:hover {
